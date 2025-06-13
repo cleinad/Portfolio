@@ -10,17 +10,6 @@ export default function HomePage() {
         document.body.style.backgroundColor = darkMode ? "#000" : "#f5f5f5";
     }, [darkMode]);
 
-    const fadeInUp = {
-        hidden: { opacity: 0, y: 60 },
-        visible: { 
-            opacity: 1, 
-            y: 0,
-            transition: {
-                duration: 0.8
-            }
-        }
-    };
-
     return (
         <main className={`min-h-screen ${darkMode ? "text-white" : "text-white"} font-sans relative overflow-x-hidden`}>
             <style jsx global>{`
