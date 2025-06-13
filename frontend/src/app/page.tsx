@@ -69,14 +69,14 @@ export default function HomePage() {
 
                 {/* Projects Section */}
                 <section className="px-6 py-16">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">// projects</h2>
+                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// projects"}</h2>
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className={`border ${darkMode ? "border-gray-700 hover:bg-gray-800/50" : "border-gray-200 hover:bg-gray-50/50"} rounded-xl p-6 transition`}>
                             <h3 className="text-xl font-medium">Housr — Centralized Student Housing</h3>
-                            <p className={`mt-2 ${darkMode ? "text-gray-400" : "text-gray-300"}`}>
+                            <p className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-100"}`}>
                                 Simplified off-campus housing discovery for students at UBC.
                             </p>
-                            <div className={`mt-3 text-sm ${darkMode ? "text-gray-500" : "text-gray-300"} space-x-2`}>
+                            <div className={`mt-3 text-sm ${darkMode ? "text-gray-400" : "text-gray-200"} space-x-2`}>
                                 <span>[Next.js]</span>
                                 <span>[Django]</span>
                                 <span>[Postgres]</span>
@@ -100,17 +100,17 @@ export default function HomePage() {
 
                 {/* About Me */}
                 <section className="px-6 py-24">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">// about</h2>
-                    <p className={`max-w-2xl mx-auto text-lg ${darkMode ? "text-gray-300" : "text-gray-300"}`}>
-                        I'm a second year Business + CS student at UBC interested in technology innovations. 
-                        Lately, I've been drawn to space tech, AI, and tools that make life smoother. 
+                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// about"}</h2>
+                    <p className={`max-w-2xl mx-auto text-lg ${darkMode ? "text-gray-300" : "text-gray-100"}`}>
+                        I&apos;m a second year Business + CS student at UBC interested in technology innovations. 
+                        Lately, I&apos;ve been drawn to space tech, AI, and tools that make life smoother. 
                         Outside of code, I love learning new skills and meeting new people.
                     </p>
                 </section>
 
                 {/* Experience */}
                 <section className="px-6 py-24">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">// experience</h2>
+                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// experience"}</h2>
                     <div className="max-w-2xl mx-auto space-y-6">
                         <div>
                             <h3 className="font-medium text-lg">Site and Content Manager @ Nicola Wealth</h3>
