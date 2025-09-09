@@ -61,7 +61,9 @@ export default function HomePage() {
                     <h2 className="text-3xl font-semibold mb-10 text-center">{"// projects"}</h2>
                     <div className="space-y-8 max-w-3xl mx-auto">
                         <div className={`border ${darkMode ? "border-gray-700 hover:bg-gray-800/50" : "border-gray-200 hover:bg-gray-50/50"} rounded-xl p-6 transition`}>
-                            <h3 className="text-xl font-medium">Housr — Centralized Student Housing</h3>
+                            <h3 className="text-xl font-medium">
+                            <a href="https://housr.ca" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>Housr</a>
+                              — Centralized Student Housing</h3>
                             <p className={`mt-2 ${darkMode ? "text-gray-300" : "text-gray-100"}`}>
                                 Simplified off-campus housing discovery for students at UBC.
                             </p>
@@ -102,7 +104,7 @@ export default function HomePage() {
                     <h2 className="text-3xl font-semibold mb-10 text-center">{"// experience"}</h2>
                     <div className="max-w-2xl mx-auto space-y-6">
                         <div>
-                            <h3 className="font-medium text-lg">Site and Content Manager @ Nicola Wealth</h3>
+                            <h3 className="font-medium text-lg">Business Management Project Assistant @ Nicola Wealth</h3>
                             <p className={`text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>Jan 2024 – Present</p>
                             <p className={`text-sm mt-1 ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
                                 Planned and built a new internal site for advisors.
