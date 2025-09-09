@@ -120,10 +120,10 @@ export default function HomePage() {
 
                 {/* Footer */}
                 <footer className="text-center py-12">
-                    <p>Contact: <a href="mailto:22danielchen@gmail.com" className={`underline ${darkMode ? "hover:text-white" : "hover:text-white"}`}>22danielchen@gmail.com</a></p>
+                    <p>Contact: <a href="mailto:danieltwentytwo@gmail.com" className={`underline ${darkMode ? "hover:text-white" : "hover:text-white"}`}>danieltwentytwo@gmail.com</a></p>
                     <div className="mt-2 flex justify-center space-x-4">
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>GitHub</a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>LinkedIn</a>
+                        <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>GitHub</a>
+                        <a href="https://linkedin.com/in/danielsychen" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>LinkedIn</a>
                         <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className={darkMode ? "hover:text-white" : "hover:text-white"}>Resume</a>
                     </div>
                     <p className="text-xs mt-6">Designed & built from Earth, reaching for orbit 🪐</p>
