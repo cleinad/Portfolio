@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import spaceBg from "../../public/backgrounds/night-bg.png";
-import daytimeBg from "../../public/backgrounds/light-bg-cloud-orange.png";
+import Starfield from "@/components/Starfield";
 
 export default function HomePage() {
     const [darkMode, setDarkMode] = useState(true);
@@ -32,16 +31,8 @@ export default function HomePage() {
                     background: rgba(120,120,130,0.7);
                 }
             `}</style>
-            {/* Fixed Space Background */}
-            <div 
-                className="fixed inset-0 z-0 pointer-events-none opacity-100"
-                style={{
-                    backgroundImage: `url(${darkMode ? spaceBg.src : daytimeBg.src})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundAttachment: 'fixed'
-                }}
-            />
+            {/* Starfield Background */}
+            <Starfield />
 
             {/* Content Container with Gentler Scroll Snap and Custom Scrollbar */}
             <div className="relative z-10 h-screen snap-y snap-proximity overflow-y-scroll custom-scroll">
@@ -93,7 +84,7 @@ export default function HomePage() {
                 <section className="px-6 py-24">
                     <h2 className="text-3xl font-semibold mb-10 text-center">{"// about"}</h2>
                     <p className={`max-w-2xl mx-auto text-lg ${darkMode ? "text-gray-300" : "text-gray-100"}`}>
-                        I&apos;m a second year Business + CS student at UBC interested in technology innovations. 
+                        I&apos;m a third year Business + CS student at UBC interested in technology innovations. 
                         Lately, I&apos;ve been drawn to space tech, AI, and tools that make life smoother. 
                         Outside of code, I love learning new skills and meeting new people.
                     </p>
@@ -139,7 +130,7 @@ export default function HomePage() {
                 aria-label="Toggle dark mode"
             >
                 <span className="text-2xl">
-                    {darkMode ? "🌞" : "🌚"}
+                    {/* {darkMode ? "🌞" : "🌚"} */}
                 </span>
             </button>
         </main>
