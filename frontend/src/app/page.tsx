@@ -1,16 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import Starfield from "@/components/Starfield";
+import SunriseSummit from "@/components/scenes/SunriseSummit";
 
 export default function HomePage() {
     const [darkMode, setDarkMode] = useState(true);
 
     useEffect(() => {
-        document.body.style.backgroundColor = darkMode ? "#000" : "#f5f5f5";
+        // Keep a pleasant fallback color behind the canvas "wallpaper"
+        document.body.style.backgroundColor = darkMode ? "#000" : "#0b1a4a";
     }, [darkMode]);
 
     return (
-        <main className={`min-h-screen ${darkMode ? "text-white" : "text-white"} font-sans relative overflow-x-hidden`}>
+        <main className={`min-h-screen text-white font-sans relative overflow-x-hidden`}>
             <style jsx global>{`
                 html {
                     scroll-behavior: smooth;
@@ -31,8 +33,8 @@ export default function HomePage() {
                     background: rgba(120,120,130,0.7);
                 }
             `}</style>
-            {/* Starfield Background */}
-            <Starfield />
+            {/* Wallpaper Background */}
+            {darkMode ? <Starfield /> : <SunriseSummit />}
 
             {/* Content Container with Gentler Scroll Snap and Custom Scrollbar */}
             <div className="relative z-10 h-screen snap-y snap-proximity overflow-y-scroll custom-scroll">
@@ -130,7 +132,7 @@ export default function HomePage() {
                 aria-label="Toggle dark mode"
             >
                 <span className="text-2xl">
-                    {/* {darkMode ? "🌞" : "🌚"} */}
+                    {darkMode ? "🌌" : "🌅"}
                 </span>
             </button>
         </main>
