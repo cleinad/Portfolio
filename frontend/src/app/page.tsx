@@ -46,28 +46,28 @@ export default function HomePage() {
             </div>
 
             {/* Top Right: Contact Icons & Theme Toggle */}
-            <div className="absolute top-8 right-8 z-50 flex items-center gap-6">
+            <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex flex-col md:flex-row items-end md:items-center gap-4 md:gap-6">
                 <div className={`flex items-center gap-4 ${textSecondary}`}>
                     <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
-                        <Github size={20} />
+                        <Github size={18} />
                     </a>
                     <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
-                        <FileText size={20} />
+                        <FileText size={18} />
                     </a>
                     <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
-                        <XIcon size={20} />
+                        <XIcon size={18} />
                     </a>
                     <a href="mailto:danieltwentytwo@gmail.com" className={`hover:${textPrimary} transition-colors`}>
-                        <Mail size={20} />
+                        <Mail size={18} />
                     </a>
                 </div>
 
-                <div className="h-6 w-px bg-current opacity-20"></div>
+                <div className="hidden md:block h-6 w-px bg-current opacity-20"></div>
 
                 <select
                     value={background}
                     onChange={(e) => setBackground(e.target.value as "celestial" | "blizzard")}
-                    className={`text-sm rounded-lg px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors ${isCelestial
+                    className={`text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors ${isCelestial
                         ? "bg-black/30 border-white/20 text-white hover:bg-black/50"
                         : "bg-white/40 border-black/10 text-black hover:bg-white/60"
                         }`}
@@ -78,19 +78,19 @@ export default function HomePage() {
             </div>
 
             {/* Main Layout Grid */}
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 h-screen w-full max-w-7xl mx-auto -translate-y-[20%]">
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 md:h-screen w-full max-w-7xl mx-auto md:-translate-y-[20%]">
 
                 {/* Left Column: Navigation */}
                 <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-center px-8 md:pl-16 lg:pl-24 pt-24 md:pt-0">
-                    <nav className="space-y-4">
+                    <nav className="flex flex-row md:flex-col flex-wrap gap-4 md:space-y-4">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
                                 onClick={() => setActiveTab(item.id)}
-                                className={`block text-sm md:text-base tracking-widest transition-all duration-500 text-left w-full uppercase
+                                className={`block text-sm md:text-lg tracking-widest transition-all duration-500 text-left uppercase
                                     ${activeTab === item.id
-                                        ? `${textPrimary} scale-110 translate-x-1 font-bold`
-                                        : `${textSecondary} hover:${textPrimary} hover:translate-x-0.5`
+                                        ? `${textPrimary} scale-110 md:translate-x-1 font-bold`
+                                        : `${textSecondary} hover:${textPrimary} md:hover:translate-x-0.5`
                                     }`}
                             >
                                 {item.label}
@@ -100,7 +100,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Right Column: Content */}
-                <div className="md:col-span-8 lg:col-span-6 flex flex-col justify-center h-full px-8 md:pr-16 overflow-y-auto">
+                <div className="md:col-span-8 lg:col-span-6 flex flex-col justify-center md:h-full px-8 md:pr-16 py-12 md:py-0 overflow-y-auto">
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
 
                         {/* ABOUT TAB */}
