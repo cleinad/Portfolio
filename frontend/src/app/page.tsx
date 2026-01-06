@@ -2,9 +2,22 @@
 import { useEffect, useState } from "react";
 import Starfield from "@/components/Starfield";
 import Blizzard from "@/components/scenes/Blizzard";
+import { Github, Mail, FileText } from "lucide-react";
+
+const XIcon = ({ size = 20 }: { size?: number }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+    >
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+);
 
 export default function HomePage() {
     const [background, setBackground] = useState<"celestial" | "blizzard">("celestial");
+    const [activeTab, setActiveTab] = useState<"about" | "experience" | "projects" | "thoughts">("about");
     const isCelestial = background === "celestial";
 
     useEffect(() => {
@@ -12,139 +25,165 @@ export default function HomePage() {
         document.body.style.backgroundColor = isCelestial ? "#000" : "#fff6d6";
     }, [isCelestial]);
 
+    const navItems = [
+        { id: "about", label: "About" },
+        { id: "experience", label: "Experience" },
+        { id: "projects", label: "Projects" },
+        { id: "thoughts", label: "Thoughts" },
+    ] as const;
+
+    // Theme helper classes
+    const textPrimary = isCelestial ? "text-white" : "text-black";
+    const textSecondary = isCelestial ? "text-gray-400" : "text-gray-600";
+    const borderColor = isCelestial ? "border-gray-800" : "border-gray-300";
+    const hoverBg = isCelestial ? "hover:bg-gray-800/50" : "hover:bg-black/5";
+
     return (
-        <main className={`min-h-screen ${isCelestial ? "text-white" : "text-black"} font-sans relative overflow-x-hidden`}>
-            <style jsx global>{`
-                html {
-                    scroll-behavior: smooth;
-                }
-                .custom-scroll {
-                    scrollbar-width: thin;
-                    scrollbar-color: #444a #181a20;
-                }
-                .custom-scroll::-webkit-scrollbar {
-                    width: 8px;
-                    background: #181a20;
-                }
-                .custom-scroll::-webkit-scrollbar-thumb {
-                    background: rgba(80,80,90,0.5);
-                    border-radius: 8px;
-                }
-                .custom-scroll::-webkit-scrollbar-thumb:hover {
-                    background: rgba(120,120,130,0.7);
-                }
-            `}</style>
+        <main className={`min-h-screen ${textPrimary} font-sans relative overflow-hidden transition-colors duration-500`}>
             {/* Wallpaper Background */}
-            {isCelestial ? <Starfield /> : <Blizzard />}
-
-            {/* Content Container with Gentler Scroll Snap and Custom Scrollbar */}
-            <div className="relative z-10 h-screen snap-y snap-proximity overflow-y-scroll custom-scroll">
-                {/* Hero Section */}
-                <section className="flex flex-col items-center justify-center h-screen text-center px-6">
-                    <h1 className="text-5xl md:text-6xl font-medium tracking-tight mb-4">
-                        Daniel Chen
-                    </h1>
-                    <p className="text-xl md:text-2xl max-w-xl">
-                        {/* Building thoughtful things */}
-                    </p>
-                    {/* <p className="mt-4 text-sm ">Currently dreaming of orbit 🛰️</p> */}
-                </section>
-
-                {/* Projects Section */}
-                <section className="px-6 py-16">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// projects"}</h2>
-                    <div className="space-y-8 max-w-3xl mx-auto">
-                        <div className={`border ${isCelestial ? "border-gray-700 hover:bg-gray-800/50" : "border-gray-300 hover:bg-black/5"} rounded-xl p-6 transition`}>
-                            <h3 className="text-xl font-medium">
-                            <a href="https://housr.ca" target="_blank" rel="noopener noreferrer" className={isCelestial ? "hover:text-white" : "hover:text-black"}>Housr</a>
-                              — Centralized Student Housing</h3>
-                            <p className={`mt-2 ${isCelestial ? "text-gray-300" : "text-gray-700"}`}>
-                                Simplified off-campus housing discovery for students at UBC.
-                            </p>
-                            <div className={`mt-3 text-sm ${isCelestial ? "text-gray-400" : "text-gray-600"} space-x-2`}>
-                                <span>[Next.js]</span>
-                                <span>[Django]</span>
-                                <span>[Postgres]</span>
-                                <span>[Tailwind]</span>
-                            </div>
-                        </div>
-
-                        {/* <div className={`border ${darkMode ? "border-gray-700 hover:bg-gray-800/50" : "border-gray-200 hover:bg-gray-50/50"} rounded-xl p-6 transition`}>
-                            <h3 className="text-xl font-medium">Orbital Tools — ISS Tracker</h3>
-                            <p className={`mt-2 ${darkMode ? "text-gray-400" : "text-gray-300"}`}>
-                                Real-time dashboard for viewing ISS position and telemetry using open APIs.
-                            </p>
-                            <div className={`mt-3 text-sm ${darkMode ? "text-gray-500" : "text-gray-300"} space-x-2`}>
-                                <span>[React]</span>
-                                <span>[Framer Motion]</span>
-                                <span>[REST API]</span>
-                            </div>
-                        </div> */}
-                    </div>
-                </section>
-
-                {/* About Me */}
-                <section className="px-6 py-24">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// about"}</h2>
-                    <p className={`max-w-2xl mx-auto text-lg ${isCelestial ? "text-gray-300" : "text-gray-700"}`}>
-                        I&apos;m a third year Business + CS student at UBC interested in technology innovations. 
-                        Lately, I&apos;ve been drawn to space tech, AI, and tools that make life smoother. 
-                        Outside of code, I love learning new skills and meeting new people.
-                    </p>
-                </section>
-
-                {/* Experience */}
-                <section className="px-6 py-24">
-                    <h2 className="text-3xl font-semibold mb-10 text-center">{"// experience"}</h2>
-                    <div className="max-w-2xl mx-auto space-y-6">
-                        <div>
-                            <h3 className="font-medium text-lg">Business Management Project Assistant @ Nicola Wealth</h3>
-                            <p className={`text-sm ${isCelestial ? "text-gray-300" : "text-gray-700"}`}>Jan 2024 – Present</p>
-                            <p className={`text-sm mt-1 ${isCelestial ? "text-gray-400" : "text-gray-600"}`}>
-                                Planned and built a new internal site for advisors.
-                            </p>
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-lg">Procurement Coordinator @ Boardwalk REIT</h3>
-                            <p className={`text-sm ${isCelestial ? "text-gray-300" : "text-gray-700"}`}>May 2023 – Sept 2023</p>
-                            <p className={`text-sm mt-1 ${isCelestial ? "text-gray-400" : "text-gray-600"}`}>
-                                Coordinated with contractors to maintain over 30,000 units across Canada.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Footer */}
-                <footer className="text-center py-12">
-                    <p>Contact: <a href="mailto:danieltwentytwo@gmail.com" className={`underline ${isCelestial ? "hover:text-white" : "hover:text-black"}`}>danieltwentytwo@gmail.com</a></p>
-                    <div className="mt-2 flex justify-center space-x-4">
-                        <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className={isCelestial ? "hover:text-white" : "hover:text-black"}>GitHub</a>
-                        <a href="https://linkedin.com/in/danielsychen" target="_blank" rel="noopener noreferrer" className={isCelestial ? "hover:text-white" : "hover:text-black"}>LinkedIn</a>
-                        <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className={isCelestial ? "hover:text-white" : "hover:text-black"}>Resume</a>
-                    </div>
-                    <p className="text-xs mt-6">Designed & built from Earth, reaching for orbit 🪐</p>
-                </footer>
+            <div className="absolute inset-0 z-0">
+                {isCelestial ? <Starfield /> : <Blizzard />}
             </div>
 
-            {/* Background selector */}
-            <div className="fixed top-6 right-6 z-50">
-                <label className={`sr-only`} htmlFor="bg-mode">
-                    Background mode
-                </label>
+            {/* Top Right: Contact Icons & Theme Toggle */}
+            <div className="absolute top-8 right-8 z-50 flex items-center gap-6">
+                <div className={`flex items-center gap-4 ${textSecondary}`}>
+                    <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
+                        <Github size={20} />
+                    </a>
+                    <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
+                        <FileText size={20} />
+                    </a>
+                    <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className={`hover:${textPrimary} transition-colors`}>
+                        <XIcon size={20} />
+                    </a>
+                    <a href="mailto:danieltwentytwo@gmail.com" className={`hover:${textPrimary} transition-colors`}>
+                        <Mail size={20} />
+                    </a>
+                </div>
+
+                <div className="h-6 w-px bg-current opacity-20"></div>
+
                 <select
-                    id="bg-mode"
                     value={background}
                     onChange={(e) => setBackground(e.target.value as "celestial" | "blizzard")}
-                    className={`text-sm rounded-lg px-3 py-2 shadow-md border backdrop-blur-sm ${
-                        isCelestial
-                            ? "bg-black/40 text-white border-white/15"
-                            : "bg-white/70 text-black border-black/10"
-                    }`}
-                    aria-label="Select background"
+                    className={`text-sm rounded-lg px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors ${isCelestial
+                        ? "bg-black/30 border-white/20 text-white hover:bg-black/50"
+                        : "bg-white/40 border-black/10 text-black hover:bg-white/60"
+                        }`}
                 >
-                    <option value="celestial">Celestial</option>
-                    <option value="blizzard">Blizzard</option>
+                    <option value="celestial" className="bg-black text-white">Celestial</option>
+                    <option value="blizzard" className="bg-white text-black">Blizzard</option>
                 </select>
+            </div>
+
+            {/* Main Layout Grid */}
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 h-screen w-full max-w-7xl mx-auto -translate-y-[20%]">
+
+                {/* Left Column: Navigation */}
+                <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-center px-8 md:pl-16 lg:pl-24 pt-24 md:pt-0">
+                    <nav className="space-y-4">
+                        {navItems.map((item) => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveTab(item.id)}
+                                className={`block text-sm md:text-base tracking-widest transition-all duration-500 text-left w-full uppercase
+                                    ${activeTab === item.id
+                                        ? `${textPrimary} scale-110 translate-x-1 font-bold`
+                                        : `${textSecondary} hover:${textPrimary} hover:translate-x-0.5`
+                                    }`}
+                            >
+                                {item.label}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+
+                {/* Right Column: Content */}
+                <div className="md:col-span-8 lg:col-span-6 flex flex-col justify-center h-full px-8 md:pr-16 overflow-y-auto">
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+                        {/* ABOUT TAB */}
+                        {activeTab === "about" && (
+                            <div className="space-y-6">
+                                <h1 className="text-4xl md:text-5xl font-medium mb-4">
+                                    Daniel Chen <span className="font-zhi-mang font-normal ml-3 text-5xl md:text-6xl align-middle">陈思远</span>
+                                </h1>
+                                <p className={`text-lg md:text-xl leading-relaxed ${textSecondary}`}>
+                                    I&apos;m a third year Business + CS student at UBC interested in technology innovations.
+                                    Lately, I&apos;ve been drawn to space tech, AI, and tools that make life smoother.
+                                </p>
+                                <p className={`text-lg md:text-xl leading-relaxed ${textSecondary}`}>
+                                    Outside of code, I love learning new skills and meeting new people.
+                                </p>
+                                <div className="pt-4">
+                                    <p className="text-sm opacity-50">wondering what is out there 🪐</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* EXPERIENCE TAB */}
+                        {activeTab === "experience" && (
+                            <div className="space-y-8">
+                                <div className={`p-6 rounded-xl border ${borderColor} ${hoverBg} transition-colors`}>
+                                    <h3 className="font-semibold text-xl">Business Management Project Assistant</h3>
+                                    <p className={`${textSecondary} text-sm mb-2`}>Nicola Wealth • Jan 2024 – Present</p>
+                                    <p className={`${textSecondary}`}>
+                                        Planned and built a new internal site for advisors.
+                                    </p>
+                                </div>
+                                <div className={`p-6 rounded-xl border ${borderColor} ${hoverBg} transition-colors`}>
+                                    <h3 className="font-semibold text-xl">Procurement Coordinator</h3>
+                                    <p className={`${textSecondary} text-sm mb-2`}>Boardwalk REIT • May 2023 – Sept 2023</p>
+                                    <p className={`${textSecondary}`}>
+                                        Coordinated with contractors to maintain over 30,000 units across Canada.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* PROJECTS TAB */}
+                        {activeTab === "projects" && (
+                            <div className="space-y-6">
+                                <a href="https://housr.ca" target="_blank" rel="noopener noreferrer" className="block group">
+                                    <div className={`p-6 rounded-xl border ${borderColor} ${hoverBg} transition-all`}>
+                                        <h3 className="text-xl font-medium group-hover:underline decoration-1 underline-offset-4">
+                                            Housr
+                                        </h3>
+                                        <p className={`mt-2 ${textSecondary}`}>
+                                            Centralized Student Housing. Simplified off-campus housing discovery for students at UBC.
+                                        </p>
+                                        <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
+                                            <span>Next.js</span>
+                                            <span>Django</span>
+                                            <span>Postgres</span>
+                                            <span>Tailwind</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                {/* Example placeholder for more projects */}
+                                <div className={`p-6 rounded-xl border border-dashed ${borderColor} opacity-50`}>
+                                    <p className="text-center text-sm">More projects coming soon...</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* THOUGHTS TAB */}
+                        {activeTab === "thoughts" && (
+                            <div className="space-y-6">
+                                <h2 className="text-xl font-medium mb-4">Random Musings</h2>
+                                <p className={`${textSecondary} leading-relaxed`}>
+                                    Nova-3 achieves breakthrough accuracy in challenging acoustic environments through
+                                    several key innovations in data and modeling. At its foundation is a sophisticated
+                                    audio embedding framework...
+                                </p>
+                                <p className={`${textSecondary} leading-relaxed`}>
+                                    (This is just a placeholder for now, but this is where I&apos;ll write about things that interest me!)
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
     );
