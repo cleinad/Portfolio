@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Starfield from "@/components/Starfield";
 import Blizzard from "@/components/scenes/Blizzard";
+import Sky from "@/components/scenes/Sky";
 import { Github, Mail, FileText } from "lucide-react";
 
 const XIcon = ({ size = 20 }: { size?: number }) => (
@@ -16,14 +17,15 @@ const XIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 export default function HomePage() {
-    const [background, setBackground] = useState<"celestial" | "blizzard">("celestial");
+    const [background, setBackground] = useState<"celestial" | "blizzard" | "sky">("sky");
     const [activeTab, setActiveTab] = useState<"about" | "experience" | "projects" | "thoughts">("about");
     const isCelestial = background === "celestial";
+    const isSky = background === "sky";
 
     useEffect(() => {
         // Keep a pleasant fallback color behind the canvas "wallpaper"
-        document.body.style.backgroundColor = isCelestial ? "#000" : "#ffffff";
-    }, [isCelestial]);
+        document.body.style.backgroundColor = isCelestial ? "#000" : (isSky ? "#87ceeb" : "#ffffff");
+    }, [isCelestial, isSky]);
 
     const navItems = [
         { id: "about", label: "About" },
@@ -33,7 +35,7 @@ export default function HomePage() {
 
     // Theme helper classes
     const textPrimary = isCelestial ? "text-white" : "text-black";
-    const textSecondary = isCelestial ? "text-gray-300" : "text-gray-600";
+    const textSecondary = isCelestial ? "text-gray-300" : (isSky ? "text-gray-700" : "text-gray-600");
     // const borderColor = isCelestial ? "border-gray-800" : "border-gray-300";
     // const hoverBg = isCelestial ? "hover:bg-gray-800/50" : "hover:bg-black/5";
 
@@ -41,7 +43,9 @@ export default function HomePage() {
         <main className={`min-h-screen ${textPrimary} font-sans relative overflow-hidden transition-colors duration-500`}>
             {/* Wallpaper Background */}
             <div className="absolute inset-0 z-0">
-                {isCelestial ? <Starfield /> : <Blizzard />}
+                {background === "celestial" && <Starfield />}
+                {background === "blizzard" && <Blizzard />}
+                {background === "sky" && <Sky />}
             </div>
 
             {/* Top Right: Theme Toggle & Icons */}
@@ -63,14 +67,17 @@ export default function HomePage() {
 
                 <select
                     value={background}
-                    onChange={(e) => setBackground(e.target.value as "celestial" | "blizzard")}
+                    onChange={(e) => setBackground(e.target.value as "celestial" | "blizzard" | "sky")}
                     className={`text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors order-1 md:order-2 ${isCelestial
                         ? "bg-black/30 border-white/20 text-white hover:bg-black/50"
-                        : "bg-white/40 border-black/10 text-black hover:bg-white/60"
+                        : (isSky
+                            ? "bg-white/30 border-white/20 text-black hover:bg-white/50"
+                            : "bg-white/40 border-black/10 text-black hover:bg-white/60")
                         }`}
                 >
                     <option value="celestial" className="bg-black text-white">Celestial</option>
                     <option value="blizzard" className="bg-white text-black">Blizzard</option>
+                    <option value="sky" className="bg-sky-400 text-white">Sky</option>
                 </select>
             </div>
 
@@ -114,7 +121,7 @@ export default function HomePage() {
 
                                     </p>
                                     <p className={`text-lg md:text-xl leading-relaxed ${textSecondary}`}>
-                                        I&apos;m always looking to meet to people, so don&apos;t hesitate to reach out!
+                                        I&apos;m always looking to meet new people, so don&apos;t hesitate to reach out!
                                     </p>
                                 </div>
 
@@ -123,20 +130,29 @@ export default function HomePage() {
                                     <div className="space-y-10">
                                         <div className="group">
                                             <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
+                                                <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Junior Software Developer</h3>
+                                                <p className={`${textSecondary} text-sm`}>Nicola Wealth • Jan 2026 – Present</p>
+                                                {/* <p className={`${textSecondary}`}>
+                                                    Buildin
+                                                </p> */}
+                                            </div>
+                                        </div>
+                                        <div className="group">
+                                            <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
                                                 <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Business Management Project Assistant</h3>
-                                                <p className={`${textSecondary} text-sm`}>Nicola Wealth • Jan 2024 – Present</p>
-                                                <p className={`${textSecondary}`}>
-                                                    Planned and built a new internal site for advisors.
-                                                </p>
+                                                <p className={`${textSecondary} text-sm`}>Nicola Wealth • Jan 2024 – Jan 2026</p>
+                                                {/* <p className={`${textSecondary}`}>
+                                                    Planned and built a new internal site for wealth advisors.
+                                                </p> */}
                                             </div>
                                         </div>
                                         <div className="group">
                                             <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
                                                 <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Procurement Coordinator</h3>
                                                 <p className={`${textSecondary} text-sm`}>Boardwalk REIT • May 2023 – Sept 2023</p>
-                                                <p className={`${textSecondary}`}>
+                                                {/* <p className={`${textSecondary}`}>
                                                     Coordinated with contractors to improve over 30,000 units across Canada.
-                                                </p>
+                                                </p> */}
                                             </div>
                                         </div>
                                     </div>
@@ -160,6 +176,39 @@ export default function HomePage() {
                                             </h3>
                                             <p className={`mt-2 ${textSecondary}`}>
                                                 Centralized Student Housing. Simplified off-campus housing discovery for students at UBC.
+                                            </p>
+                                            <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
+                                                <span>Next.js</span>
+                                                <span>Django</span>
+                                                <span>Postgres</span>
+                                                <span>Tailwind</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="https://github.com/cleinad/echo" target="_blank" rel="noopener noreferrer" className="block group">
+                                        <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
+                                            <h3 className="text-xl font-semibold group-hover:underline decoration-1 underline-offset-4">
+                                                Echo
+                                            </h3>
+                                            <p className={`mt-2 ${textSecondary}`}>
+                                                Create a podcast episode from a quick note.
+                                            </p>
+                                            <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
+                                                <span>Next.js</span>
+                                                <span>OpenAI</span>
+                                                <span>Supabase</span>
+                                                <span>LangGraph</span>
+                                                <span>ElevenLabs</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="https://github.com/cleinad/point-cloud-viewer" target="_blank" rel="noopener noreferrer" className="block group">
+                                        <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
+                                            <h3 className="text-xl font-semibold group-hover:underline decoration-1 underline-offset-4">
+                                                Point Cloud Viewer
+                                            </h3>
+                                            <p className={`mt-2 ${textSecondary}`}>
+                                                A C++ application for visualizing 3D point cloud datasets with interactive viewing capabilities.
                                             </p>
                                             <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
                                                 <span>Next.js</span>
@@ -195,6 +244,6 @@ export default function HomePage() {
                     </div>
                 </div>
             </div>
-        </main>
+        </main >
     );
 }
