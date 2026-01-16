@@ -25,15 +25,15 @@ export default function Sky({ className }: SkyProps) {
         });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
-        // Deep sky blue to light sky blue gradient simulation
-        renderer.setClearColor(0x87ceeb, 1);
+        // Lighter sky blue simulation
+        renderer.setClearColor(0xb3e5fc, 1);
         container.appendChild(renderer.domElement);
 
-        // Fog for horizon haze
-        scene.fog = new THREE.Fog(0xadd8e6, 5, 50);
+        // Fog for horizon haze - adjusted to match lighter sky
+        scene.fog = new THREE.Fog(0xe1f5fe, 5, 60);
 
         // --- Clouds ---
-        const cloudCount = 15;
+        const cloudCount = 30; // Increased for denser cloud sea
         const clouds: THREE.Mesh[] = [];
 
         // Create a simple procedural cloud texture (canvas)
@@ -68,12 +68,14 @@ export default function Sky({ className }: SkyProps) {
         for (let i = 0; i < cloudCount; i++) {
             const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
             cloud.position.set(
-                (Math.random() - 0.5) * 50,
-                (Math.random() - 0.5) * 10 + 2,
-                (Math.random() - 0.5) * 40 - 10
+                (Math.random() - 0.5) * 60,
+                -8 + (Math.random() - 0.5) * 6, // Positioned below camera
+                (Math.random() - 0.5) * 50 - 15
             );
+            // Rotate to be horizontal "sheets"
+            cloud.rotation.x = -Math.PI / 2 + (Math.random() - 0.5) * 0.2;
             cloud.rotation.z = Math.random() * Math.PI;
-            cloud.scale.set(Math.random() * 2 + 1, Math.random() * 2 + 1, 1);
+            cloud.scale.set(Math.random() * 3 + 2, Math.random() * 3 + 2, 1);
             scene.add(cloud);
             clouds.push(cloud);
         }
@@ -201,7 +203,7 @@ export default function Sky({ className }: SkyProps) {
             aria-hidden="true"
             className={className ?? "fixed inset-0 z-0 pointer-events-none"}
             style={{
-                background: 'linear-gradient(to bottom, #1e90ff, #87ceeb, #add8e6)',
+                background: 'linear-gradient(to bottom, #b3e5fc, #e1f5fe, #ffffff)',
             }}
         />
     );
