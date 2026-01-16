@@ -5,12 +5,14 @@ import "./globals.css";
 const crimsonPro = Crimson_Pro({
   variable: "--font-crimson-pro",
   subsets: ["latin"],
+  preload: false,
 });
 
 const zhiMangXing = Zhi_Mang_Xing({
   variable: "--font-zhi-mang-xing",
   weight: "400",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {

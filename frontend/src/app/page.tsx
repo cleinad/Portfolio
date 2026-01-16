@@ -4,6 +4,9 @@ import Starfield from "@/components/Starfield";
 import Blizzard from "@/components/scenes/Blizzard";
 import Sky from "@/components/scenes/Sky";
 import { Github, Mail, FileText } from "lucide-react";
+import About from "@/components/sections/About";
+import Projects from "@/components/sections/Projects";
+import Thoughts from "@/components/sections/Thoughts";
 
 const XIcon = ({ size = 20 }: { size?: number }) => (
     <svg
@@ -24,7 +27,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Keep a pleasant fallback color behind the canvas "wallpaper"
-        document.body.style.backgroundColor = isCelestial ? "#000" : (isSky ? "#87ceeb" : "#ffffff");
+        document.body.style.backgroundColor = isCelestial ? "#000" : (isSky ? "#b3e5fc" : "#ffffff");
     }, [isCelestial, isSky]);
 
     const navItems = [
@@ -107,143 +110,14 @@ export default function HomePage() {
                 <div className="md:col-span-8 lg:col-span-6 flex flex-col justify-start md:h-full px-8 md:pr-16 pt-32 pb-12 md:pt-40 md:pb-24 overflow-y-auto hide-scrollbar">
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
 
-                        {/* ABOUT TAB */}
-                        {activeTab === "about" && (
-                            <div className="space-y-12">
-                                <div className="space-y-6">
-                                    <h1 className="text-4xl md:text-5xl font-medium mb-4">
-                                        Daniel Chen <span className="block md:inline-block font-zhi-mang font-normal md:ml-3 text-5xl md:text-6xl align-middle mt-2 md:mt-0">陈思远</span>
-                                    </h1>
-                                    <p className={`text-lg md:text-xl leading-relaxed ${textSecondary}`}>
-                                        I&apos;m a third year Business + CS student at UBC. Currently I am cofounder of a
-                                        Christian organization with over 100 members. I enjoy running, fighting,
-                                        listening to ambient music, reading and finding hidden tools to test out.
+                        {activeTab === "about" && <About textSecondary={textSecondary} />}
+                        {activeTab === "projects" && <Projects textSecondary={textSecondary} />}
+                        {activeTab === "thoughts" && <Thoughts textSecondary={textSecondary} />}
 
-                                    </p>
-                                    <p className={`text-lg md:text-xl leading-relaxed ${textSecondary}`}>
-                                        I&apos;m always looking to meet new people, so don&apos;t hesitate to reach out!
-                                    </p>
-                                </div>
-
-                                <div className="space-y-8">
-                                    <h2 className="text-2xl font-medium opacity-80">Experience</h2>
-                                    <div className="space-y-10">
-                                        <div className="group">
-                                            <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                                <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Junior Software Developer</h3>
-                                                <p className={`${textSecondary} text-sm`}>Nicola Wealth • Jan 2026 – Present</p>
-                                                {/* <p className={`${textSecondary}`}>
-                                                    Buildin
-                                                </p> */}
-                                            </div>
-                                        </div>
-                                        <div className="group">
-                                            <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                                <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Business Management Project Assistant</h3>
-                                                <p className={`${textSecondary} text-sm`}>Nicola Wealth • Jan 2024 – Jan 2026</p>
-                                                {/* <p className={`${textSecondary}`}>
-                                                    Planned and built a new internal site for wealth advisors.
-                                                </p> */}
-                                            </div>
-                                        </div>
-                                        <div className="group">
-                                            <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                                <h3 className="font-semibold text-xl group-hover:underline decoration-1 underline-offset-4">Procurement Coordinator</h3>
-                                                <p className={`${textSecondary} text-sm`}>Boardwalk REIT • May 2023 – Sept 2023</p>
-                                                {/* <p className={`${textSecondary}`}>
-                                                    Coordinated with contractors to improve over 30,000 units across Canada.
-                                                </p> */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* <div className="pt-4">
-                                    <p className="text-sm opacity-50"> 🪐</p>
-                                </div> */}
-                            </div>
-                        )}
-
-
-                        {/* PROJECTS TAB */}
-                        {activeTab === "projects" && (
-                            <div className="space-y-12">
-                                <div className="space-y-8">
-                                    <a href="https://housr.ca" target="_blank" rel="noopener noreferrer" className="block group">
-                                        <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                            <h3 className="text-xl font-semibold group-hover:underline decoration-1 underline-offset-4">
-                                                Housr
-                                            </h3>
-                                            <p className={`mt-2 ${textSecondary}`}>
-                                                Centralized Student Housing. Simplified off-campus housing discovery for students at UBC.
-                                            </p>
-                                            <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
-                                                <span>Next.js</span>
-                                                <span>Django</span>
-                                                <span>Postgres</span>
-                                                <span>Tailwind</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="https://github.com/cleinad/echo" target="_blank" rel="noopener noreferrer" className="block group">
-                                        <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                            <h3 className="text-xl font-semibold group-hover:underline decoration-1 underline-offset-4">
-                                                Echo
-                                            </h3>
-                                            <p className={`mt-2 ${textSecondary}`}>
-                                                Create a podcast episode from a quick note.
-                                            </p>
-                                            <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
-                                                <span>Next.js</span>
-                                                <span>OpenAI</span>
-                                                <span>Supabase</span>
-                                                <span>LangGraph</span>
-                                                <span>ElevenLabs</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="https://github.com/cleinad/point-cloud-viewer" target="_blank" rel="noopener noreferrer" className="block group">
-                                        <div className="border-l-2 pl-6 border-current/10 space-y-2 transition-all group-hover:border-current/30">
-                                            <h3 className="text-xl font-semibold group-hover:underline decoration-1 underline-offset-4">
-                                                Point Cloud Viewer
-                                            </h3>
-                                            <p className={`mt-2 ${textSecondary}`}>
-                                                A C++ application for visualizing 3D point cloud datasets with interactive viewing capabilities.
-                                            </p>
-                                            <div className={`mt-4 text-xs ${textSecondary} flex gap-2 font-mono uppercase tracking-wide opacity-70`}>
-                                                <span>Next.js</span>
-                                                <span>Django</span>
-                                                <span>Postgres</span>
-                                                <span>Tailwind</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                {/* Example placeholder for more projects */}
-                                <div className="border-l-2 pl-6 border-dashed border-current/10 opacity-50">
-                                    <p className="text-sm">More projects coming soon...</p>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* THOUGHTS TAB */}
-                        {activeTab === "thoughts" && (
-                            <div className="space-y-8 max-w-2xl">
-                                <h2 className="text-xl font-medium mb-4 opacity-80">Musings</h2>
-                                <div className={`${textSecondary} leading-relaxed font-serif italic space-y-4`}>
-                                    <p className="text-sm not-italic opacity-50 mb-6">Isaiah 29:13</p>
-                                    <div className="pl-4 border-l border-current/10 space-y-3">
-                                        <p>“Because this people draw near with their mouth</p>
-                                        <p className="pl-4">and honor me with their lips,</p>
-                                        <p className="pl-6">while their hearts are far from me,</p>
-                                        <p>and their fear of me is a commandment taught by men,”</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
         </main >
+
     );
 }

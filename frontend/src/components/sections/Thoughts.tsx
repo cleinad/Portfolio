@@ -1,0 +1,22 @@
+"use client";
+
+interface ThoughtsProps {
+    textSecondary: string;
+}
+
+export default function Thoughts({ textSecondary }: ThoughtsProps) {
+    return (
+        <div className="space-y-8 max-w-2xl">
+            <h2 className="text-xl font-medium mb-4 opacity-80">Musings</h2>
+            <div className={`${textSecondary} leading-relaxed font-serif italic space-y-4`}>
+                <p className="text-sm not-italic opacity-50 mb-6">Isaiah 29:13</p>
+                <div className="pl-4 border-l border-current/10 space-y-3">
+                    <p>“Because this people draw near with their mouth</p>
+                    <p className="pl-4">and honor me with their lips,</p>
+                    <p className="pl-6">while their hearts are far from me,</p>
+                    <p>and their fear of me is a commandment taught by men,”</p>
+                </div>
+            </div>
+        </div>
+    );
+}
