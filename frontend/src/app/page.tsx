@@ -85,19 +85,19 @@ export default function HomePage() {
             </div>
 
             {/* Main Layout Grid */}
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 md:h-screen w-full max-w-7xl mx-auto">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 lg:h-screen w-full max-w-7xl mx-auto">
 
                 {/* Left Column: Navigation */}
-                <div className="absolute top-4 left-4 md:relative md:top-0 md:left-0 md:col-span-4 lg:col-span-3 flex flex-col justify-start px-4 md:px-8 md:pl-16 lg:pl-24 pt-0 md:pt-44">
-                    <nav className="flex flex-row md:flex-col flex-wrap gap-4 md:space-y-4">
+                <div className="absolute top-4 left-4 lg:relative lg:top-0 lg:left-0 lg:col-span-3 flex flex-col justify-start px-4 lg:px-8 lg:pl-24 pt-0 lg:pt-44">
+                    <nav className="flex flex-row lg:flex-col flex-wrap gap-4 lg:space-y-4">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
                                 onClick={() => setActiveTab(item.id)}
-                                className={`block text-sm md:text-lg tracking-widest transition-all duration-500 text-left uppercase
+                                className={`block text-sm lg:text-lg tracking-widest transition-all duration-500 text-left uppercase
                                     ${activeTab === item.id
-                                        ? `${textPrimary} scale-110 md:translate-x-1 font-bold`
-                                        : `${textSecondary} hover:${textPrimary} md:hover:translate-x-0.5`
+                                        ? `${textPrimary} scale-110 lg:translate-x-1 font-bold`
+                                        : `${textSecondary} hover:${textPrimary} lg:hover:translate-x-0.5`
                                     }`}
                             >
                                 {item.label}
@@ -107,11 +107,11 @@ export default function HomePage() {
                 </div>
 
                 {/* Right Column: Content */}
-                <div className="md:col-span-8 lg:col-span-6 flex flex-col justify-start md:h-full px-8 md:pr-16 pt-32 pb-12 md:pt-40 md:pb-24 overflow-y-auto hide-scrollbar">
+                <div className={`flex flex-col justify-start lg:h-full px-8 pr-14 lg:pr-20 pt-32 pb-12 lg:pt-40 lg:pb-24 overflow-y-auto hide-scrollbar ${activeTab === "projects" ? "lg:col-span-9" : "lg:col-span-6"}`}>
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
 
                         {activeTab === "about" && <About textSecondary={textSecondary} />}
-                        {activeTab === "projects" && <Projects textSecondary={textSecondary} />}
+                        {activeTab === "projects" && <Projects textSecondary={textSecondary} background={background} />}
                         {activeTab === "thoughts" && <Thoughts textSecondary={textSecondary} />}
 
                     </div>

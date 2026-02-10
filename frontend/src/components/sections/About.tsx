@@ -29,7 +29,7 @@ export default function About({ textSecondary }: AboutProps) {
                                 />
                             </div>
                             <p className={`text-lg md:text-xl ${textSecondary}`}>
-                                Junior Software Developer @ Nicola Wealth
+                                Software Engineer @ Nicola Wealth
                             </p>
                         </div>
                         <div className="flex items-center gap-4">
