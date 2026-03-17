@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Crimson_Pro, Zhi_Mang_Xing } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const crimsonPro = Crimson_Pro({
@@ -34,6 +35,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-GJVBE7GBVF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GJVBE7GBVF');
+          `}
+        </Script>
+      </head>
       <body
         className={`${crimsonPro.variable} ${zhiMangXing.variable} antialiased`}
       >
