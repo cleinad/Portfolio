@@ -189,6 +189,13 @@ export default function Sky({ className }: SkyProps) {
             cloudGeometry.dispose();
             cloudMaterial.dispose();
             cloudTexture.dispose();
+
+            if (shootingStar) {
+                scene.remove(shootingStar);
+                (shootingStar.material as THREE.MeshBasicMaterial).dispose();
+                shootingStar.geometry.dispose();
+            }
+
             renderer.dispose();
 
             if (container.contains(renderer.domElement)) {

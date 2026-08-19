@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
@@ -47,21 +47,49 @@ export default function ProjectModal({
     onClose,
 }: ProjectModalProps) {
     const styles = themeStyles[background];
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         const prev = document.body.style.overflow;
+        const previousActiveElement = document.activeElement as HTMLElement | null;
         document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = prev;
-        };
-    }, []);
 
-    useEffect(() => {
+        closeButtonRef.current?.focus();
+
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
+            if (e.key === "Escape") {
+                e.preventDefault();
+                onClose();
+                return;
+            }
+
+            if (e.key !== "Tab" || !dialogRef.current) return;
+
+            const focusableElements = Array.from(
+                dialogRef.current.querySelectorAll<HTMLElement>(
+                    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+                ),
+            );
+            if (focusableElements.length === 0) return;
+
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         };
+
         window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            document.body.style.overflow = prev;
+            previousActiveElement?.focus();
+        };
     }, [onClose]);
 
     return createPortal(
@@ -80,6 +108,11 @@ export default function ProjectModal({
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
                 className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl border backdrop-blur-xl ${styles.panel}`}
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="project-modal-title"
+                aria-describedby="project-modal-description"
             >
                 {/* Carousel — full-bleed at top, no padding */}
                 <div className="relative">
@@ -88,7 +121,10 @@ export default function ProjectModal({
                         background={background}
                     />
                     <button
+                        type="button"
                         onClick={onClose}
+                        ref={closeButtonRef}
+                        aria-label="Close project details"
                         className={`absolute top-3 right-3 z-10 p-1.5 rounded-full backdrop-blur-md transition-colors ${styles.close}`}
                     >
                         <X size={20} />
@@ -97,14 +133,14 @@ export default function ProjectModal({
 
                 {/* Content below the carousel */}
                 <div className="p-6 md:p-8 space-y-4">
-                    <h2 className={`text-3xl font-semibold ${styles.title}`}>{project.title}</h2>
+                    <h2 id="project-modal-title" className={`text-3xl font-semibold ${styles.title}`}>{project.title}</h2>
 
-                    <p className={`text-xl leading-relaxed ${textSecondary}`}>
+                    <p id="project-modal-description" className={`text-xl leading-relaxed ${textSecondary}`}>
                         {project.detailedDescription}
                     </p>
 
                     <div
-                        className={`text-sm flex flex-wrap gap-2 font-mono uppercase tracking-wide ${styles.tag}`}
+                        className={`text-sm flex flex-wrap gap-2 font-mono tracking-normal ${styles.tag}`}
                     >
                         {project.tech.map((t) => (
                             <span key={t}>{t}</span>
