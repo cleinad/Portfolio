@@ -34,7 +34,9 @@ export default function ProjectCard({
 
     return (
         <button
+            type="button"
             onClick={onClick}
+            aria-label={`Open details for ${project.title}`}
             className={`w-full text-left rounded-xl border backdrop-blur-md overflow-hidden transition-all duration-300 group cursor-pointer ${styles.card}`}
         >
             <div className="relative aspect-video overflow-hidden">
@@ -42,7 +44,7 @@ export default function ProjectCard({
                     src={project.thumbnail}
                     alt={project.title}
                     fill
-                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 560px"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
             </div>
@@ -52,7 +54,7 @@ export default function ProjectCard({
                     {project.description}
                 </p>
                 <div
-                    className={`pt-1 text-sm flex flex-wrap gap-2 font-mono uppercase tracking-wide ${styles.tag}`}
+                    className={`pt-1 text-sm flex flex-wrap gap-2 font-mono tracking-normal ${styles.tag}`}
                 >
                     {project.tech.slice(0, 3).map((t) => (
                         <span key={t}>{t}</span>
