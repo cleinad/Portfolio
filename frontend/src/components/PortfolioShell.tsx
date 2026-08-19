@@ -75,8 +75,8 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
                 {animationEnabled && background === "sky" && <Sky />}
             </div>
 
-            <header className="absolute inset-x-0 top-0 z-50 flex flex-wrap items-center justify-between gap-4 px-4 py-4 md:px-8 md:py-8 lg:px-12">
-                <nav className="flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="Portfolio sections">
+            <header className="absolute inset-0 top-0 z-50 pointer-events-none">
+                <nav className="pointer-events-auto absolute top-4 left-4 flex flex-wrap items-center gap-x-5 gap-y-2 md:top-8 md:left-8 lg:left-12" aria-label="Portfolio sections">
                     {navItems.map((item) => (
                         <Link
                             key={item.id}
@@ -92,8 +92,8 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
                     ))}
                 </nav>
 
-                <div className="ml-auto flex flex-wrap items-center gap-4 md:gap-6">
-                    <div className={`flex items-center gap-4 ${textSecondary}`}>
+                <div className="pointer-events-auto absolute top-4 right-4 flex flex-col items-end gap-4 md:top-8 md:right-8 md:flex-row md:items-center md:gap-6">
+                    <div className={`order-2 flex flex-col items-center gap-4 ${textSecondary} md:order-1 md:flex-row`}>
                         <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="GitHub"><Github size={18} /></a>
                         <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="Resume"><FileText size={18} /></a>
                         <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="X"><XIcon size={18} /></a>
@@ -103,7 +103,7 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
                     <select
                         value={background}
                         onChange={(event) => setBackground(event.target.value as Background)}
-                        className={`text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors ${isCelestial
+                        className={`order-1 text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors md:order-2 ${isCelestial
                             ? "bg-black/30 border-white/20 text-white hover:bg-black/50"
                             : background === "sky"
                                 ? "bg-white/30 border-white/20 text-black hover:bg-white/50"
