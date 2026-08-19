@@ -2,15 +2,12 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { PROJECTS, Project } from "@/data/projects";
+import { usePortfolioTheme } from "@/components/PortfolioThemeContext";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
 
-interface ProjectsProps {
-    textSecondary: string;
-    background: "celestial" | "blizzard" | "sky";
-}
-
-export default function Projects({ textSecondary, background }: ProjectsProps) {
+export default function Projects() {
+    const { background, textSecondary } = usePortfolioTheme();
     const [selectedProject, setSelectedProject] = useState<Project | null>(
         null,
     );
