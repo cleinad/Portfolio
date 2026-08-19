@@ -99,11 +99,13 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
                         <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="X"><XIcon size={18} /></a>
                         <a href="mailto:danieltwentytwo@gmail.com" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="Email"><Mail size={18} /></a>
                     </div>
+                </div>
 
+                <div className="pointer-events-auto fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8">
                     <select
                         value={background}
                         onChange={(event) => setBackground(event.target.value as Background)}
-                        className={`order-1 text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors md:order-2 ${isCelestial
+                        className={`text-xs md:text-sm rounded-xl px-2 py-1 shadow-sm border backdrop-blur-md cursor-pointer outline-none transition-colors ${isCelestial
                             ? "bg-black/30 border-white/20 text-white hover:bg-black/50"
                             : background === "sky"
                                 ? "bg-white/30 border-white/20 text-black hover:bg-white/50"
