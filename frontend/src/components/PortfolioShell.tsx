@@ -5,15 +5,16 @@ import Link from "next/link";
 import { CSSProperties, useEffect, useState } from "react";
 import { FileText, Github, Mail } from "lucide-react";
 import { PortfolioThemeProvider, usePortfolioTheme, type Background } from "@/components/PortfolioThemeContext";
+import type { Locale, Section, SiteContent } from "@/data/content";
 
 const Starfield = dynamic(() => import("@/components/Starfield"), { ssr: false });
 const Blizzard = dynamic(() => import("@/components/scenes/Blizzard"), { ssr: false });
 const Sky = dynamic(() => import("@/components/scenes/Sky"), { ssr: false });
 
-type Section = "about" | "projects" | "thoughts";
-
 interface PortfolioShellProps {
     section: Section;
+    route: "home" | Section;
+    content: Pick<SiteContent, "locale" | "nav" | "navigationLabel" | "language" | "theme" | "social">;
     children: React.ReactNode;
 }
 
@@ -23,19 +24,43 @@ const XIcon = ({ size = 20 }: { size?: number }) => (
     </svg>
 );
 
-const navItems: { id: Section; label: string; href: string }[] = [
-    { id: "about", label: "About", href: "/about" },
-    { id: "projects", label: "Projects", href: "/projects" },
-    { id: "thoughts", label: "Thoughts", href: "/thoughts" },
-];
-
 const backgroundColors: Record<Background, string> = {
     celestial: "#000000",
     blizzard: "#ffffff",
     sky: "#b3e5fc",
 };
 
-function PortfolioFrame({ section, children }: PortfolioShellProps) {
+function localePath(locale: Locale, route: PortfolioShellProps["route"]) {
+    if (route === "home") return locale === "zh-Hans" ? "/zh" : "/";
+    const suffix = route === "about" ? "/about" : "/projects";
+    return locale === "zh-Hans" ? `/zh${suffix}` : suffix;
+}
+
+function LanguageToggle({ locale, route, content }: Pick<PortfolioShellProps, "route" | "content"> & { locale: Locale }) {
+    const alternateLocale: Locale = locale === "en" ? "zh-Hans" : "en";
+
+    const rememberLanguage = () => {
+        document.cookie = `portfolio_locale=${alternateLocale}; Path=/; Max-Age=31536000; SameSite=Lax`;
+    };
+
+    return (
+        <nav className="flex min-h-8 items-center text-sm md:text-base" aria-label={content.language.label}>
+            {locale === "en" ? (
+                <span aria-current="page" className="font-semibold">{content.language.english}</span>
+            ) : (
+                <Link href={localePath("en", route)} prefetch={false} onClick={rememberLanguage} lang="en" hrefLang="en" className="rounded-sm px-1 py-1 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current">{content.language.english}</Link>
+            )}
+            <span className="px-1.5 opacity-45" aria-hidden="true">/</span>
+            {locale === "zh-Hans" ? (
+                <span aria-current="page" lang="zh-Hans" className="font-semibold">{content.language.chinese}</span>
+            ) : (
+                <Link href={localePath("zh-Hans", route)} prefetch={false} onClick={rememberLanguage} lang="zh-Hans" hrefLang="zh-Hans" className="rounded-sm px-1 py-1 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current">{content.language.chinese}</Link>
+            )}
+        </nav>
+    );
+}
+
+function PortfolioFrame({ section, route, content, children }: PortfolioShellProps) {
     const { background, setBackground, textSecondary } = usePortfolioTheme();
     const [animationEnabled, setAnimationEnabled] = useState(false);
     const isCelestial = background === "celestial";
@@ -76,28 +101,29 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
             </div>
 
             <header className="absolute inset-0 top-0 z-50 pointer-events-none">
-                <nav className="pointer-events-auto absolute top-4 left-4 flex flex-wrap items-center gap-x-5 gap-y-2 md:top-8 md:left-8 lg:left-12" aria-label="Portfolio sections">
-                    {navItems.map((item) => (
+                <nav className="pointer-events-auto absolute top-4 left-4 flex flex-wrap items-center gap-x-5 gap-y-2 md:top-8 md:left-8 lg:left-12" aria-label={content.navigationLabel}>
+                    {(["about", "projects"] as const).map((item) => (
                         <Link
-                            key={item.id}
-                            href={item.href}
-                            aria-current={section === item.id ? "page" : undefined}
-                            className={`min-h-6 px-1 py-0.5 text-sm md:text-base transition-all duration-300 ${section === item.id
+                            key={item}
+                            href={localePath(content.locale, item)}
+                            aria-current={section === item ? "page" : undefined}
+                            className={`min-h-6 px-1 py-0.5 text-sm md:text-base transition-all duration-300 ${section === item
                                 ? "border-b-2 border-current font-semibold"
                                 : `${textSecondary} opacity-75 hover:opacity-100`
                                 }`}
                         >
-                            {item.label}
+                            {content.nav[item]}
                         </Link>
                     ))}
                 </nav>
 
-                <div className="pointer-events-auto absolute top-4 right-4 flex flex-col items-end gap-4 md:top-8 md:right-8 md:flex-row md:items-center md:gap-6">
+                <div className="pointer-events-auto absolute top-4 right-4 flex flex-col items-end gap-3 md:top-8 md:right-8 md:flex-row md:items-center md:gap-6">
+                    <LanguageToggle locale={content.locale} route={route} content={content} />
                     <div className={`order-2 flex flex-col items-center gap-4 ${textSecondary} md:order-1 md:flex-row`}>
-                        <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="GitHub"><Github size={18} /></a>
-                        <a href="/resume/Daniel Chen's Resume.pdf" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="Resume"><FileText size={18} /></a>
-                        <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="X"><XIcon size={18} /></a>
-                        <a href="mailto:danieltwentytwo@gmail.com" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label="Email"><Mail size={18} /></a>
+                        <a href="https://github.com/cleinad" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label={content.social.github}><Github size={18} /></a>
+                        <a href={content.social.resumeHref} target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label={content.social.resume}><FileText size={18} /></a>
+                        <a href="https://x.com/danielsychen" target="_blank" rel="noopener noreferrer" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label={content.social.x}><XIcon size={18} /></a>
+                        <a href="mailto:danieltwentytwo@gmail.com" className="min-h-6 min-w-6 transition-opacity hover:opacity-100 opacity-70" aria-label={content.social.email}><Mail size={18} /></a>
                     </div>
                 </div>
 
@@ -111,11 +137,11 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
                                 ? "bg-white/30 border-white/20 text-black hover:bg-white/50"
                                 : "bg-white/40 border-black/10 text-black hover:bg-white/60"
                             }`}
-                        aria-label="Background theme"
+                        aria-label={content.theme.label}
                     >
-                        <option value="celestial" className="bg-black text-white">Celestial</option>
-                        <option value="blizzard" className="bg-white text-black">Blizzard</option>
-                        <option value="sky" className="bg-sky-400 text-white">Sky</option>
+                        <option value="celestial" className="bg-black text-white">{content.theme.celestial}</option>
+                        <option value="blizzard" className="bg-white text-black">{content.theme.blizzard}</option>
+                        <option value="sky" className="bg-sky-400 text-white">{content.theme.sky}</option>
                     </select>
                 </div>
             </header>
@@ -129,10 +155,10 @@ function PortfolioFrame({ section, children }: PortfolioShellProps) {
     );
 }
 
-export default function PortfolioShell({ section, children }: PortfolioShellProps) {
+export default function PortfolioShell({ section, route, content, children }: PortfolioShellProps) {
     return (
         <PortfolioThemeProvider>
-            <PortfolioFrame section={section}>{children}</PortfolioFrame>
+            <PortfolioFrame section={section} route={route} content={content}>{children}</PortfolioFrame>
         </PortfolioThemeProvider>
     );
 }

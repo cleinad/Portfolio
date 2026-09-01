@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Project } from "@/data/projects";
+import type { Project, SiteContent } from "@/data/content";
 
 const themeStyles = {
     celestial: {
@@ -22,6 +22,7 @@ interface ProjectCardProps {
     background: "celestial" | "blizzard" | "sky";
     textSecondary: string;
     onClick: () => void;
+    ui: SiteContent["projectUi"];
 }
 
 export default function ProjectCard({
@@ -29,6 +30,7 @@ export default function ProjectCard({
     background,
     textSecondary,
     onClick,
+    ui,
 }: ProjectCardProps) {
     const styles = themeStyles[background];
 
@@ -36,7 +38,7 @@ export default function ProjectCard({
         <button
             type="button"
             onClick={onClick}
-            aria-label={`Open details for ${project.title}`}
+            aria-label={`${ui.openDetails} ${project.title}`}
             className={`w-full text-left rounded-xl border backdrop-blur-md overflow-hidden transition-all duration-300 group cursor-pointer ${styles.card}`}
         >
             <div className="relative aspect-video overflow-hidden">

@@ -27,6 +27,10 @@ body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+:lang(zh-Hans) {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }

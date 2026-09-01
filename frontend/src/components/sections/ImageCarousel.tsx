@@ -4,6 +4,7 @@ import Image from "next/image";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import type { SiteContent } from "@/data/content";
 
 const themeStyles = {
     celestial: {
@@ -24,13 +25,15 @@ const themeStyles = {
 } as const;
 
 interface ImageCarouselProps {
-    images: string[];
+    images: readonly string[];
     background: "celestial" | "blizzard" | "sky";
+    ui: SiteContent["projectUi"];
 }
 
 export default function ImageCarousel({
     images,
     background,
+    ui,
 }: ImageCarouselProps) {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
@@ -85,7 +88,7 @@ export default function ImageCarousel({
                     }}
                     role="button"
                     tabIndex={0}
-                    aria-label={`Open screenshot ${index + 1} in full screen`}
+                    aria-label={`${ui.openScreenshot} ${index + 1}`}
                 >
                     <AnimatePresence initial={false} custom={direction} mode="popLayout">
                         <motion.div
@@ -114,7 +117,7 @@ export default function ImageCarousel({
                         <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); go(-1); }}
-                            aria-label="Previous screenshot"
+                            aria-label={ui.previousScreenshot}
                             className={`absolute left-2 top-1/2 -translate-y-1/2 rounded-full p-1.5 backdrop-blur-sm transition-colors ${styles.arrow}`}
                         >
                             <ChevronLeft size={18} />
@@ -122,7 +125,7 @@ export default function ImageCarousel({
                         <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); go(1); }}
-                            aria-label="Next screenshot"
+                            aria-label={ui.nextScreenshot}
                             className={`absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1.5 backdrop-blur-sm transition-colors ${styles.arrow}`}
                         >
                             <ChevronRight size={18} />
@@ -137,7 +140,7 @@ export default function ImageCarousel({
                                         setDirection(i > index ? 1 : -1);
                                         setIndex(i);
                                     }}
-                                    aria-label={`Show screenshot ${i + 1}`}
+                                    aria-label={`${ui.showScreenshot} ${i + 1}`}
                                     aria-current={i === index ? "true" : undefined}
                                     className={`w-1.5 h-1.5 rounded-full transition-colors ${
                                         i === index ? styles.dotActive : styles.dot
@@ -162,7 +165,7 @@ export default function ImageCarousel({
                             onClick={() => setLightboxOpen(false)}
                             role="dialog"
                             aria-modal="true"
-                            aria-label="Screenshot viewer"
+                            aria-label={ui.screenshotViewer}
                         >
                             <motion.div
                                 initial={{ scale: 0.9, opacity: 0 }}
@@ -184,7 +187,7 @@ export default function ImageCarousel({
                             <button
                                 type="button"
                                 onClick={() => setLightboxOpen(false)}
-                                aria-label="Close screenshot viewer"
+                                aria-label={ui.closeScreenshotViewer}
                                 className="absolute top-5 right-5 text-white/60 hover:text-white p-2 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-colors"
                             >
                                 <X size={22} />
@@ -195,7 +198,7 @@ export default function ImageCarousel({
                                     <button
                                         type="button"
                                         onClick={(e) => { e.stopPropagation(); go(-1); }}
-                                        aria-label="Previous screenshot"
+                                        aria-label={ui.previousScreenshot}
                                         className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white p-2.5 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-colors"
                                     >
                                         <ChevronLeft size={24} />
@@ -203,7 +206,7 @@ export default function ImageCarousel({
                                     <button
                                         type="button"
                                         onClick={(e) => { e.stopPropagation(); go(1); }}
-                                        aria-label="Next screenshot"
+                                        aria-label={ui.nextScreenshot}
                                         className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white p-2.5 rounded-full backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-colors"
                                     >
                                         <ChevronRight size={24} />
@@ -219,7 +222,7 @@ export default function ImageCarousel({
                                                     setDirection(i > index ? 1 : -1);
                                                     setIndex(i);
                                                 }}
-                                                aria-label={`Show screenshot ${i + 1}`}
+                                                aria-label={`${ui.showScreenshot} ${i + 1}`}
                                                 aria-current={i === index ? "true" : undefined}
                                                 className={`w-2 h-2 rounded-full transition-colors ${
                                                     i === index ? "bg-white" : "bg-white/40"
