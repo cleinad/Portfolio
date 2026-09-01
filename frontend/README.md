@@ -16,6 +16,10 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Deployment configuration
+
+Set `NEXT_PUBLIC_SITE_URL` to the production origin (for example, `https://example.com`) so the generated sitemap uses the canonical public URLs. On Vercel, requests from China are offered the Simplified Chinese site on a first visit; an explicit language selection is remembered in a cookie.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

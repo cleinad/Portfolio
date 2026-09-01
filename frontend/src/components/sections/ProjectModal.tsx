@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
-import { Project } from "@/data/projects";
+import type { Project, SiteContent } from "@/data/content";
 import ImageCarousel from "./ImageCarousel";
 
 const themeStyles = {
@@ -38,6 +38,7 @@ interface ProjectModalProps {
     background: "celestial" | "blizzard" | "sky";
     textSecondary: string;
     onClose: () => void;
+    ui: SiteContent["projectUi"];
 }
 
 export default function ProjectModal({
@@ -45,6 +46,7 @@ export default function ProjectModal({
     background,
     textSecondary,
     onClose,
+    ui,
 }: ProjectModalProps) {
     const styles = themeStyles[background];
     const dialogRef = useRef<HTMLDivElement>(null);
@@ -119,12 +121,13 @@ export default function ProjectModal({
                     <ImageCarousel
                         images={project.images}
                         background={background}
+                        ui={ui}
                     />
                     <button
                         type="button"
                         onClick={onClose}
                         ref={closeButtonRef}
-                        aria-label="Close project details"
+                        aria-label={ui.closeDetails}
                         className={`absolute top-3 right-3 z-10 p-1.5 rounded-full backdrop-blur-md transition-colors ${styles.close}`}
                     >
                         <X size={20} />
@@ -153,7 +156,7 @@ export default function ProjectModal({
                         rel="noopener noreferrer"
                         className={`inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl backdrop-blur-sm transition-colors ${styles.link}`}
                     >
-                        {project.link.label}
+                        {ui.visit} {project.link.label}
                         <ExternalLink size={14} />
                     </a>
                 </div>

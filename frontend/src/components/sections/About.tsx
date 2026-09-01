@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Activity, BookOpen, ExternalLink, Music, Wrench } from "lucide-react";
+import type { SiteContent } from "@/data/content";
 
 const secondaryTextStyle = { color: "var(--portfolio-text-secondary)" };
 
@@ -11,7 +12,9 @@ function OrganizationLogo({ src, alt }: { src: string; alt: string }) {
     );
 }
 
-export default function About() {
+export default function About({ content }: { content: SiteContent["about"] }) {
+    const interestIcons = [Activity, Music, BookOpen, Wrench];
+
     return (
         <div className="space-y-12">
             <h1 className="text-2xl md:text-3xl font-medium">
@@ -19,65 +22,44 @@ export default function About() {
             </h1>
 
             <section className="space-y-4" aria-labelledby="experience-heading" style={secondaryTextStyle}>
-                <p id="experience-heading" className="text-sm tracking-normal opacity-70">Experience</p>
+                <p id="experience-heading" className="text-sm tracking-normal opacity-70">{content.experience}</p>
                 <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/nicolawealthmanagement_logo.jpeg" alt="Nicola Wealth logo" />
-                        <div>
-                            <p className="text-lg md:text-xl">Software Developer @ Nicola Wealth</p>
-                            <p className="text-sm opacity-60">Jan 2026 – Aug 2026</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/optoutrights.png" alt="OptOutRights.org logo" />
-                        <div>
-                            <p className="text-lg md:text-xl">Software Engineer Intern @ Opt Out Rights</p>
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm opacity-60">
-                                <span>May 2026 – Jul 2026</span>
-                                <a href="https://github.com/OptOutRights/tracker-blocker/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 transition-opacity hover:opacity-100">
-                                    Open source <ExternalLink size={13} aria-hidden="true" />
-                                </a>
+                    {content.roles.map((role) => (
+                        <div key={`${role.organization}-${role.title}`} className="flex items-center gap-4">
+                            <OrganizationLogo src={role.logo} alt={role.alt} />
+                            <div>
+                                <p className="text-lg md:text-xl">{role.title}</p>
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm opacity-60">
+                                    {role.date && <span>{role.date}</span>}
+                                    {role.openSource && <a href="https://github.com/OptOutRights/tracker-blocker/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 transition-opacity hover:opacity-100">
+                                        {role.openSource} <ExternalLink size={13} aria-hidden="true" />
+                                    </a>}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/nicolawealthmanagement_logo.jpeg" alt="Nicola Wealth logo" />
-                        <div>
-                            <p className="text-lg md:text-xl">Business Management Project Assistant @ Nicola Wealth</p>
-                            <p className="text-sm opacity-60">Jan 2025 – Jan 2026</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/boardwalk.jpeg" alt="Boardwalk REIT logo" />
-                        <div>
-                            <p className="text-lg md:text-xl">Procurement Coordinator @ Boardwalk REIT</p>
-                            <p className="text-sm opacity-60">May 2023 – Sept 2023</p>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </section>
 
             <section className="space-y-4" aria-labelledby="education-heading" style={secondaryTextStyle}>
-                <p id="education-heading" className="text-sm tracking-normal opacity-70">Education</p>
+                <p id="education-heading" className="text-sm tracking-normal opacity-70">{content.education}</p>
                 <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/peking-university-emblem.webp" alt="Peking University logo" />
-                        <p className="text-lg md:text-xl">Exchange Student @ Peking University</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <OrganizationLogo src="/ubc.png" alt="UBC logo" />
-                        <p className="text-lg md:text-xl">CS and Business @ UBC</p>
-                    </div>
+                    {content.educationItems.map((item) => (
+                        <div key={item.organization} className="flex items-center gap-4">
+                            <OrganizationLogo src={item.logo} alt={item.alt} />
+                            <p className="text-lg md:text-xl">{item.title}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
 
             <section className="space-y-4" aria-labelledby="interests-heading" style={secondaryTextStyle}>
-                <p id="interests-heading" className="text-sm tracking-normal opacity-70">Interests</p>
+                <p id="interests-heading" className="text-sm tracking-normal opacity-70">{content.interests}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3"><Activity size={18} className="opacity-70" /><span>Mixed Martial Arts</span></div>
-                    <div className="flex items-center gap-3"><Music size={18} className="opacity-70" /><span>Ambient Music</span></div>
-                    <div className="flex items-center gap-3"><BookOpen size={18} className="opacity-70" /><span>Reading</span></div>
-                    <div className="flex items-center gap-3"><Wrench size={18} className="opacity-70" /><span>Building</span></div>
+                    {content.interestsItems.map((interest, index) => {
+                        const Icon = interestIcons[index];
+                        return <div key={interest} className="flex items-center gap-3"><Icon size={18} className="opacity-70" /><span>{interest}</span></div>;
+                    })}
                 </div>
             </section>
         </div>
