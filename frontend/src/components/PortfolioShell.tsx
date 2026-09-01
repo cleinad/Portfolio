@@ -10,7 +10,7 @@ const Starfield = dynamic(() => import("@/components/Starfield"), { ssr: false }
 const Blizzard = dynamic(() => import("@/components/scenes/Blizzard"), { ssr: false });
 const Sky = dynamic(() => import("@/components/scenes/Sky"), { ssr: false });
 
-type Section = "about" | "projects" | "thoughts";
+type Section = "about" | "projects";
 
 interface PortfolioShellProps {
     section: Section;
@@ -26,7 +26,6 @@ const XIcon = ({ size = 20 }: { size?: number }) => (
 const navItems: { id: Section; label: string; href: string }[] = [
     { id: "about", label: "About", href: "/about" },
     { id: "projects", label: "Projects", href: "/projects" },
-    { id: "thoughts", label: "Thoughts", href: "/thoughts" },
 ];
 
 const backgroundColors: Record<Background, string> = {
